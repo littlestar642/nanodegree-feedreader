@@ -49,11 +49,8 @@ $(function () {
 
     describe('The Menu', () => {
 
-        let check;
-        // beforeEach to get the .menu-hidden DOM Element before any test
-        beforeEach(() => {
-            check = $('body').hasClass('menu-hidden');
-        })
+        let check = $('body').hasClass('menu-hidden');
+        
         // Test to check node hidden by default.
         it('should be hidden by default', () => {
             expect(check).toBe(true);
@@ -61,30 +58,14 @@ $(function () {
         // Code to test whether the menu is hidden and shows up onclick. Also vice versa
         let notClicked = true;
         it('should change visibility when the menu icon is clicked', (done) => {
-            if (check) {
                 expect(check).toBe(true);
                 $('.menu-icon-link').trigger('click');
                 check = $('body').hasClass('menu-hidden');
                 expect(check).toBe(false);
-            } else {
-                expect(check).toBe(false);
-                $('.menu-icon-link').trigger('click');
-                check = $('body').hasClass('menu-hidden');
-                expect(check).toBe(true);
-            }
-            done();
+                done();
         });
 
     })
-
-    /* TODO: Write a new test suite named "Initial Entries" */
-
-    /* TODO: Write a test that ensures when the loadFeed
-     * function is called and completes its work, there is at least
-     * a single .entry element within the .feed container.
-     * Remember, loadFeed() is asynchronous so this test will require
-     * the use of Jasmine's beforeEach and asynchronous done() function.
-     */
 
     describe('Initial Entries', () => {
         let feedContainer, id;
@@ -100,6 +81,7 @@ $(function () {
             it(`should not be empty for ${feed.name}`, (done) => {
                 loadFeed(id, (entries) => {
                     expect(entries.length).toBeGreaterThan(0);
+                    expect(feedContainer.length).toBeGreaterThan(0);
                     done();
                 });
                 id++;
