@@ -62,10 +62,12 @@ $(function () {
         let notClicked = true;
         it('should change visibility when the menu icon is clicked', (done) => {
             if (check) {
+                expect(check).toBe(true);
                 $('.menu-icon-link').trigger('click');
                 check = $('body').hasClass('menu-hidden');
                 expect(check).toBe(false);
             } else {
+                expect(check).toBe(false);
                 $('.menu-icon-link').trigger('click');
                 check = $('body').hasClass('menu-hidden');
                 expect(check).toBe(true);
