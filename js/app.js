@@ -56,7 +56,8 @@ function init() {
                      entries = result.feed.entries,
                      entriesLen = entries.length,
                      entryTemplate = Handlebars.compile($('.tpl-entry').html());
-
+                     entry=result.feed.entries;
+                     console.log(entries)
                  title.html(feedName);   // Set the header text
                  container.empty();      // Empty out all previous entries
 
@@ -68,9 +69,9 @@ function init() {
                  entries.forEach(function(entry) {
                      container.append(entryTemplate(entry));
                  });
-
+                
                  if (cb) {
-                     cb();
+                     cb(entries);
                  }
                },
        error: function (result, status, err){
