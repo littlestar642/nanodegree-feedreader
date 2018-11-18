@@ -72,7 +72,6 @@ $(function () {
 
         // beforeEach to get the feed container and set the timeout of jasmine before each test.
         beforeEach(() => {
-            feedContainer = $('.feed');
             id = 0;
             jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         })
@@ -80,7 +79,7 @@ $(function () {
         for (feed of allFeeds) {
             it(`should not be empty for ${feed.name}`, (done) => {
                 loadFeed(id, (entries) => {
-                    expect(entries.length).toBeGreaterThan(0);
+                    let feedContainer = $('.feed .entry');
                     expect(feedContainer.length).toBeGreaterThan(0);
                     done();
                 });
@@ -101,20 +100,26 @@ $(function () {
         })
         // Code to test the entries from all the urls are different and unique.
         let lastentry = [];
-        for (feed of allFeeds) {
+        
             it(`should change content for ${feed.name}`, (done) => {
-                loadFeed(id, (entries) => {
-                    for (let i = 0; i < entries.length; i++) {
-                        for (let j = 0; j < entries.length; j++) {
-                            expect(entries[i]).not.toBe(lastentry[j]);
-                        }
-                    }
-                    lastentry = entries;
-                    done();
+                loadFeed(0, (entries) => {
+                    let oldFeed=$('.feed').html();
+                    loadFeed(1,(entries)=>{
+                        let newFeed=$('.feed').html();
+                        console.log(oldFeed,newFeed);
+                        expect(newFeed).not.toBe(oldFeed);
+                        // for (let i = 0; i < oldFeed.length; i++) {
+                        //     for (let j = 0; j < newFeed.length; j++) {
+                        //         expect(oldFeed[i]).not.toBe(newFeed[j]);
+                        //     }
+                        // }
+                        done();
+                    })
+                    
                 })
             })
             id++;
-        }
+        
 
     })
 }());
